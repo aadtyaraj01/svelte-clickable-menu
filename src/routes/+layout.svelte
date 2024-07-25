@@ -10,7 +10,14 @@
 		🍺
 	{/snippet}
 	<NavMenu>
-		<NavPanel index={0}>
+		<NavPanel index={0} link="/" label="hello">
+			<div class="nav-panel absolute grid grid-cols-2 gap-6 bg-white p-3">
+				{#each new Array(6) as _, i}
+					<a href="link-{i}">link-{i}</a>
+				{/each}
+			</div>
+		</NavPanel>
+		<NavPanel index={1} link="/" label="gello">
 			<div class="nav-panel absolute grid grid-cols-2 gap-6 bg-white p-3">
 				{#each new Array(6) as _, i}
 					<a href="link-{i}">link-{i}</a>
