@@ -16,23 +16,23 @@
 	{/snippet}
 	<NavMenu>
 		<NavPanel index={0} link="/" label="hello">
-			<div class="nav-panel grid grid-cols-2 gap-6 bg-slate-500 p-3 dark:bg-black dark:text-white">
+			<div class="nav-panel grid grid-cols-2 gap-6 p-3 dark:text-white">
 				{#each new Array(6) as _, i}
 					<a href="link-{i}">link-{i}</a>
 				{/each}
 			</div>
 		</NavPanel>
 		<NavPanel index={1} link="/" label="gello">
-			<div class="nav-panel grid grid-cols-2 gap-6 bg-white p-3">
-				{#each new Array(6) as _, i}
-					<a href="link-{i}">link-{i}</a>
+			<div class="nav-panel grid grid-cols-2 gap-6 p-3">
+				{#each new Array(9) as _, i}
+					<a href="link-{i}">link-{i + 10}</a>
 				{/each}
 			</div>
 		</NavPanel>
-		<NavPanel index={3} link="/" label="kello">
-			<div class="nav-panel grid grid-cols-2 gap-6 bg-white p-3">
-				{#each new Array(6) as _, i}
-					<a href="link-{i}">link-{i}</a>
+		<NavPanel index={2} link="/" label="kello">
+			<div class="nav-panel grid grid-cols-2 gap-6 p-3">
+				{#each new Array(18) as _, i}
+					<a href="link-{i}">link-{i + 4}</a>
 				{/each}
 			</div>
 		</NavPanel>
@@ -64,6 +64,6 @@
 		--color-theme: #fff;
 	}
 	:global(body) {
-		background-color: var(--color-theme) !important;
+		background-color: var(--color-theme);
 	}
 </style>

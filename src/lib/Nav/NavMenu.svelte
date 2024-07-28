@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext, setContext, type Snippet } from 'svelte';
-	import { getMenuState, setMenuState } from './navState.svelte.js';
+	import { setHeightState, setMenuRefs, setMenuState } from './navState.svelte.js';
 	import { fade } from 'svelte/transition';
 
 	type Props = {
@@ -10,7 +10,13 @@
 	let { children }: Props = $props();
 
 	setMenuState();
-	let openMenuIndex = getMenuState<{ value: number | null }>('openMenuIndex');
+	setHeightState();
+	setMenuRefs();
+
+	let openMenuIndex = getContext<{ value: number | null }>('openMenuIndex');
+	let menuHeight = getContext<{ value: number }>('menuHeight');
+
+	// $inspect(menuHeight);
 </script>
 
 <nav class="flex flex-1 list-none flex-row gap-4">
