@@ -15,6 +15,7 @@
 
 	let openMenuIndex = getContext<{ value: number | null }>('openMenuIndex');
 	let menuHeight = getContext<{ value: number }>('menuHeight');
+	let refs = getContext<{ value: HTMLElement[] }>('refs');
 
 	// $inspect(menuHeight);
 </script>
@@ -22,9 +23,12 @@
 <nav class="flex flex-1 list-none flex-row gap-4">
 	{@render children()}
 	{#if openMenuIndex.value !== null}
-		<div
+		<button
 			transition:fade={{ duration: 200 }}
 			class="absolute left-0 top-[48px] z-10 h-[calc(100vh-48px)] w-full overflow-hidden bg-slate-950/70"
-		></div>
+			onclick={() => {
+				openMenuIndex.value = null;
+			}}
+		></button>
 	{/if}
 </nav>

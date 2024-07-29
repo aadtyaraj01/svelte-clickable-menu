@@ -45,20 +45,6 @@
 	{@render children()}
 </main>
 
-<!-- 
-	<NavBar>
-		<NavIcon></NavBar>
-		<NavMenu>
-			<NavPanel>Products</NavPanel>
-			<NavPanel>Solutions</NavPanel>
-			<NavPanel>Resources</NavPanel>
-			<NavLink>Pricing</NavLink>
-		</NavMenu>
-		<NavCta></NavCta>
-		<NavSettings></NavSettings>
-	</NavBar>
--->
-
 <style>
 	:global(:root) {
 		--color-theme: #fff;

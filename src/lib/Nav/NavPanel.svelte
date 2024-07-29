@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { getContext, type Snippet } from 'svelte';
 	import { ChevronDown } from 'lucide-svelte';
-	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
 	import { tweenedHeight } from './navState.svelte.js';
 	import clsx from 'clsx';
 
@@ -26,22 +24,27 @@
 			closeMenu();
 			document.removeEventListener('click', closeMenu);
 		} else {
-			openMenuIndex.value = index;
-			if (target && refs.value[index]) {
-				console.log(refs.value);
-				$tweenedHeight = refs.value[index].offsetHeight;
-			}
-
-			// Add the event listener after a short delay to avoid immediate triggering
-			setTimeout(() => {
-				document.addEventListener('click', closeMenu, { once: true });
-			}, 0);
+			openMenu(e, target, index);
 		}
+	}
+
+	function openMenu(e: Event, target: HTMLElement, index: number) {
+		openMenuIndex.value = index;
+
+		// request animation frame ensures that it accesses the height only after DOM is updated.
+		requestAnimationFrame(() => {
+			if (refs.value[index]) {
+				tweenedHeight.set(refs.value[index].offsetHeight);
+			}
+		});
+		requestAnimationFrame(() => {
+			document.addEventListener('click', closeMenu, { once: true });
+		});
 	}
 
 	function closeMenu() {
 		openMenuIndex.value = null;
-		$tweenedHeight = 0;
+		tweenedHeight.set(0);
 	}
 </script>
 
@@ -61,20 +64,23 @@
 		</span>
 	</a>
 </li>
-{#if openMenuIndex.value !== null}
-	<!-- TODO: store height value for smoother transition b/w the menus -->
-	<div
-		class={clsx(
-			'absolute left-0 top-[48px] z-20 w-full bg-zinc-200',
-			openMenuIndex.value === index ? 'opacity-100' : 'pointer-events-none opacity-0'
-		)}
-		transition:slide={{ duration: 300, axis: 'y', easing: quintOut }}
-	>
+<div
+	class={clsx(
+		'absolute left-0 top-[48px] z-20 w-full bg-zinc-200',
+		openMenuIndex.value === index ? 'opacity-100' : 'pointer-events-none opacity-0'
+	)}
+	style={`height: ${$tweenedHeight}px`}
+>
+	{#if openMenuIndex.value !== null}
+		<!-- transition:slide={{ duration: 300, axis: 'y', easing: quintOut }} -->
+		<!-- TODO: store height value for smoother transition b/w the menus -->
 		<div class={`${openMenuIndex.value === index && 'fade-in'}`} bind:this={refs.value[index]}>
 			{@render children()}
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>
+
+<!-- {JSON.stringify(refs.value[index])} -->
 
 <style>
 	@keyframes fade-in {
